@@ -33,31 +33,29 @@ export const getServerSideProps = async (context: any) => {
 };
 
 const PostPage = ({ post, good }: Props) => {
-  // console.log(goodData);
+  const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [count, setCount] = useState(good.length);
   const [isGooded, setIsGooded] = useState(false);
-
+  //useStateの初期値を動的にする
+  //初期レンダリングはログインしているかどうか
+  //
   const router = useRouter();
-  const [isTrueUser, setIsTrueUser] = useState<boolean>(false);
+  // const [isTrueUser, setIsTrueUser] = useState<boolean>(false);
   const timeArray = Object.values(post);
   const exactTimeArray = timeArray.slice(3, 11);
   const everyTime = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"];
-  const { user } = useAuth();
   useEffect(() => {
     if (!user) {
       return;
-    } else if (user.id === post.authorId) {
-      setIsTrueUser(true);
     }
     //いいねしているユーザーだった場合useStateにオブジェクトでセット
-    const foundGood = good.find((e) => e.userId === user.id && e.postId === post.id);
+    const foundGood = good.find((e) => e.userId == user.id);
+    console.log(foundGood);
     if (foundGood) {
       setIsGooded(true);
     }
-    console.log(isGooded);
-  });
-
+  }, []);
   //投稿削除api
   const onClickDelete = async () => {
     try {
@@ -71,9 +69,17 @@ const PostPage = ({ post, good }: Props) => {
       alert("権限がありません。");
     }
   };
-  //commentAPI
-  const onClickComment = (e: React.FormEvent<HTMLFormElement>) => {
+  //comment追加API
+  const onClickComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    try {
+      await apiClient.post(`/comment/${post.id}`, {
+        comment: commentText,
+      });
+      setCommentText("");
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   //good追加API
@@ -116,7 +122,7 @@ const PostPage = ({ post, good }: Props) => {
             <span className="m-4 p-4 lg:px-8 bg-red-300 text-center rounded-md hover:bg-red-400 hover:cursor-pointer" onClick={onClickGood}>
               ♥{count}人がいいねしました
             </span>
-            {isTrueUser ? (
+            {user && user.id === post.authorId ? (
               <div className="flex justify-end mx-10 my-2">
                 <Link href={`/posts/edit/${post.id}`}>
                   <button className="px-2 py-1 bg-green-400 text-white font-semibold rounded hover:bg-green-500 mx-2">編集</button>
