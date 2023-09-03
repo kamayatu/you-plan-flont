@@ -33,19 +33,11 @@ const BlogPageList = ({ allPosts, posts }: any) => {
   const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
-    //開いているページのpostsをsliceする
-    // const getPostsByPage = () => {
-    //   const startIndex = (currentPageNumber - 1) * NUMBER_OF_POSTS_PER_PAGE;
-    //   const endIndex = startIndex + NUMBER_OF_POSTS_PER_PAGE;
-    //   const slicedPosts = posts.slice(startIndex, endIndex);
-    //   setCurrentPages(posts);
-    // };
     const getPageCount = () => {
       // 11/4= 4.2=mfで 4, 11% 4 = 2あまり2,余が出るから1
       const pageNumber = Math.floor(allPosts.length / NUMBER_OF_POSTS_PER_PAGE) + (allPosts.length % NUMBER_OF_POSTS_PER_PAGE > 0 ? 1 : 0);
       setPageCount(pageNumber);
     };
-    // getPostsByPage();
     getPageCount();
   });
 

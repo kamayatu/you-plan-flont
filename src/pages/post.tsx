@@ -2,6 +2,7 @@ import apiClient from "@/lib/apiClient";
 import React, { useState } from "react";
 
 const post = () => {
+  const [completeState, setCompleteState] = useState(true);
   const [title, setTitle] = useState<string>("");
   const [five, setFive] = useState<string>("");
   const [six, setSix] = useState<string>("");
@@ -37,7 +38,16 @@ const post = () => {
 
   return (
     <div>
-      <form className="grid grid-cols-1 gap-6 m-16 bg-slate-50 p-10 rounded-md" onSubmit={handleSubmit}>
+      <form
+        className="grid grid-cols-1 gap-6 m-16 bg-slate-50 p-10 rounded-md"
+        onSubmit={
+          completeState
+            ? handleSubmit
+            : (e) => {
+                e.preventDefault();
+              }
+        }
+      >
         <h2 className="text-2xl">新規投稿</h2>
         <label className="block">
           <span className="text-gray-700">タイトル</span>
@@ -45,35 +55,35 @@ const post = () => {
         </label>
         <label className="block">
           <span className="text-gray-700">17:00</span>
-          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={five} onChange={(e) => setFive(e.target.value)} placeholder="" />
+          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={five} onChange={(e) => setFive(e.target.value)} onBlur={() => setCompleteState(true)} onFocus={() => setCompleteState(false)} />
         </label>
         <label className="block">
           <span className="text-gray-700">18:00</span>
-          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={six} onChange={(e) => setSix(e.target.value)} placeholder="" />
+          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={six} onChange={(e) => setSix(e.target.value)} onBlur={() => setCompleteState(true)} onFocus={() => setCompleteState(false)} />
         </label>
         <label className="block">
           <span className="text-gray-700">19:00</span>
-          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={seven} onChange={(e) => setSeven(e.target.value)} placeholder="" />
+          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={seven} onChange={(e) => setSeven(e.target.value)} onBlur={() => setCompleteState(true)} onFocus={() => setCompleteState(false)} />
         </label>
         <label className="block">
           <span className="text-gray-700">20:00</span>
-          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={eight} onChange={(e) => setEight(e.target.value)} placeholder="" />
+          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={eight} onChange={(e) => setEight(e.target.value)} onBlur={() => setCompleteState(true)} onFocus={() => setCompleteState(false)} />
         </label>
         <label className="block">
           <span className="text-gray-700">21:00</span>
-          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={nine} onChange={(e) => setNine(e.target.value)} placeholder="" />
+          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={nine} onChange={(e) => setNine(e.target.value)} onBlur={() => setCompleteState(true)} onFocus={() => setCompleteState(false)} />
         </label>
         <label className="block">
           <span className="text-gray-700">22:00</span>
-          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={ten} onChange={(e) => setTen(e.target.value)} placeholder="" />
+          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={ten} onChange={(e) => setTen(e.target.value)} onBlur={() => setCompleteState(true)} onFocus={() => setCompleteState(false)} />
         </label>
         <label className="block">
           <span className="text-gray-700">23:00</span>
-          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={eleven} onChange={(e) => setEleven(e.target.value)} placeholder="" />
+          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={eleven} onChange={(e) => setEleven(e.target.value)} onBlur={() => setCompleteState(true)} onFocus={() => setCompleteState(false)} />
         </label>
         <label className="block">
           <span className="text-gray-700">24:00</span>
-          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={twelve} onChange={(e) => setTwelve(e.target.value)} placeholder="" />
+          <input type="text" className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" value={twelve} onChange={(e) => setTwelve(e.target.value)} onBlur={() => setCompleteState(true)} onFocus={() => setCompleteState(false)} />
         </label>
 
         <label className="block">

@@ -1,21 +1,24 @@
 import { useAuth } from "@/context/Auth";
 import apiClient from "@/lib/apiClient";
-import { goodType, postType } from "@/types";
+import { commentType, goodType, postType } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Comment from "@/components/Comment";
+import Profile from "@/components/Profile";
 
 interface Props {
   post: postType;
   good: goodType[];
+  comment: commentType[];
 }
-
+//投稿詳細ページ
 export const getServerSideProps = async (context: any) => {
   const { postId } = context.params;
   try {
     const postData = await apiClient.get(`/posts/${postId}`);
     const goodData = await apiClient.get(`/good/${postId}`);
+    const commentData = await apiClient.get(`/comment/${postId}`);
     if (!postData.data) {
       return {
         notFound: true,
@@ -25,6 +28,7 @@ export const getServerSideProps = async (context: any) => {
       props: {
         post: postData.data,
         good: goodData.data,
+        comment: commentData.data,
       },
     };
   } catch (err) {
@@ -32,11 +36,12 @@ export const getServerSideProps = async (context: any) => {
   }
 };
 
-const PostPage = ({ post, good }: Props) => {
+const PostPage = ({ post, good, comment }: Props) => {
   const { user } = useAuth();
   const [commentText, setCommentText] = useState("");
   const [count, setCount] = useState(good.length);
   const [isGooded, setIsGooded] = useState(false);
+  const [currentComment, setCurrentComent] = useState(comment);
   //useStateの初期値を動的にする
   //初期レンダリングはログインしているかどうか
   //
@@ -45,17 +50,32 @@ const PostPage = ({ post, good }: Props) => {
   const timeArray = Object.values(post);
   const exactTimeArray = timeArray.slice(3, 11);
   const everyTime = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"];
+  // useEffect(() => {
+  //   if (!user) {
+  //     return;
+  //   }
+  //   //いいねしているユーザーだった場合useStateにオブジェクトでセット
+  //   const foundGood = good.find((e) => e.userId == user.id);
+  //   console.log(foundGood);
+  //   if (foundGood) {
+  //     setIsGooded(true);
+  //   }
+  // }, []);
   useEffect(() => {
     if (!user) {
       return;
     }
-    //いいねしているユーザーだった場合useStateにオブジェクトでセット
-    const foundGood = good.find((e) => e.userId == user.id);
-    console.log(foundGood);
-    if (foundGood) {
-      setIsGooded(true);
-    }
-  }, []);
+
+    // 非同期処理を実行
+    const fetchData = async () => {
+      const foundGood = await good.find((e) => e.userId === user.id);
+      setIsGooded(!!foundGood);
+      console.log(isGooded);
+    };
+
+    fetchData();
+  }, [user]);
+
   //投稿削除api
   const onClickDelete = async () => {
     try {
@@ -73,11 +93,13 @@ const PostPage = ({ post, good }: Props) => {
   const onClickComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await apiClient.post(`/comment/${post.id}`, {
+      const newComment = await apiClient.post(`/comment/${post.id}`, {
         comment: commentText,
       });
       setCommentText("");
+      setCurrentComent((prevPosts) => [newComment.data, ...prevPosts]);
     } catch (err) {
+      alert("ログインしてください。");
       console.log(err);
     }
   };
@@ -90,7 +112,7 @@ const PostPage = ({ post, good }: Props) => {
       setIsGooded(!isGooded);
     } catch (err) {
       console.log(err);
-      alert("権限がありません。");
+      alert("ログインしてください。");
     }
   };
 
@@ -98,6 +120,10 @@ const PostPage = ({ post, good }: Props) => {
     <div>
       <div className="container mx-auto bg-slate-50 shadow-sm  mt-7 text-gray-600 rounded-lg">
         <div className="p-10">
+          <div className=" px-10">
+            <p className="text-3xl">作成者</p>
+            <Profile username={post.author.username} email={post.author.email} isProfile={false} />
+          </div>
           <div className="m-10 border-amber-950 border-2 rounded-md">
             <h3 className="font-bold text-3xl p-4 bg-blue-500 rounded-md">EVENING PLANNER</h3>
             <h4 className="text-3xl p-4 rounded-sm font-bold">{post.title}</h4>
@@ -145,7 +171,9 @@ const PostPage = ({ post, good }: Props) => {
                 投稿
               </button>
             </form>
-            <Comment />
+            {currentComment.map((com) => (
+              <Comment comment={com} key={com.id} setCurrentComent={setCurrentComent} currentComment={currentComment} />
+            ))}
           </div>
         </div>
       </div>

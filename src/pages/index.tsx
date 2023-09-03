@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export const getServerSideProps = async () => {
   try {
-    const res = await apiClient.get("/posts");
+    const res = await apiClient.get("/posts/five/5");
     const posts = res.data;
     return {
       props: {
