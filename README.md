@@ -1,8 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## ユウプラ（夕方プランナー）
 
-## Getting Started
+[ポートフォリオリンク先](rinkusaki)
 
-First, run the development server:
+## ゲストユーザー
+
+id: ninja@gmail.com  
+pass: ninja
+
+## サービス概要
+
+ユウプラは帰宅後の１時間ごとのスケジュール表を共有できるアプリです。
+
+より良い習慣を身につけ、自己実現させたいと思ったことはありませんか？
+人を構成するのは習慣だと言われています。<br>
+過去の行動や考え方の習慣の積み重ねが今のあなたを作ります。
+だからこそ、日々の習慣の積み重ねで、少しだけ自分を変えることにチャレンジしてみませんか？
+
+しかし、いざ挑戦しようと思うと・・・
+
+- 何かを成し遂げたいけどやる気が出ず、帰宅後はなんとなくスマートフォンを触って平日が終わってしまう。
+- 目標のためにどのくらいの時間を割けばいいかわからない。
+- そもそも計画（プラン）を作る気が起きない。
+
+そんな悩みをすでに習慣化してる人の真似をするところから始めてみませんか？<br>
+理想の自己実現の一歩をユウプラは応援します。
+
+## メイン機能
+
+- ユーザー登録、ログイン機能
+- 投稿機能
+- プロフィール編集機能
+- コメント機能
+- いいね機能
+  - いいねした投稿表示
+- ページネーション機能
+
+## 使用技術
+
+| フロントエンド | バックエンド | データベース |
+| -------------- | ------------ | ------------ |
+| Next.js        | Node.js      | supabase     |
+| TailWindCSS    | express      | PostgreSQL   |
 
 ```bash
 npm run dev
@@ -36,4 +74,5 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
 # you-plan-flont

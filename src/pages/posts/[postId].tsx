@@ -42,25 +42,12 @@ const PostPage = ({ post, good, comment }: Props) => {
   const [count, setCount] = useState(good.length);
   const [isGooded, setIsGooded] = useState(false);
   const [currentComment, setCurrentComent] = useState(comment);
-  //useStateの初期値を動的にする
-  //初期レンダリングはログインしているかどうか
-  //
+
   const router = useRouter();
-  // const [isTrueUser, setIsTrueUser] = useState<boolean>(false);
   const timeArray = Object.values(post);
   const exactTimeArray = timeArray.slice(3, 11);
   const everyTime = ["17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00", "24:00"];
-  // useEffect(() => {
-  //   if (!user) {
-  //     return;
-  //   }
-  //   //いいねしているユーザーだった場合useStateにオブジェクトでセット
-  //   const foundGood = good.find((e) => e.userId == user.id);
-  //   console.log(foundGood);
-  //   if (foundGood) {
-  //     setIsGooded(true);
-  //   }
-  // }, []);
+
   useEffect(() => {
     if (!user) {
       return;

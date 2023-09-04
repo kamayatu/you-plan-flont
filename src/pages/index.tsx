@@ -18,14 +18,6 @@ export const getServerSideProps = async () => {
 };
 
 export default function Home({ posts }: any) {
-  // const [latestPosts, setLatestPosts] = useState<postType[]>([]);
-  // useEffect(() => {
-  //   const fetchLatestPosts = async () => {
-  //     const response = await apiClient.get("/posts");
-  //     setLatestPosts(response.data);
-  //   };
-  //   fetchLatestPosts();
-  // }, []);
   return (
     <>
       <Head>

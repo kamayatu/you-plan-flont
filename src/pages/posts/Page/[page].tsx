@@ -4,8 +4,8 @@ import PagenationPosts from "@/components/Pagenation/PagenationPosts";
 import { NUMBER_OF_POSTS_PER_PAGE } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import Pagenation from "@/components/Pagenation/Pagenation";
-import { postType } from "@/types";
 
+//pagenationページ
 export const getServerSideProps = async (context: any) => {
   try {
     const res = await apiClient.get("/posts");
@@ -34,7 +34,6 @@ const BlogPageList = ({ allPosts, posts }: any) => {
 
   useEffect(() => {
     const getPageCount = () => {
-      // 11/4= 4.2=mfで 4, 11% 4 = 2あまり2,余が出るから1
       const pageNumber = Math.floor(allPosts.length / NUMBER_OF_POSTS_PER_PAGE) + (allPosts.length % NUMBER_OF_POSTS_PER_PAGE > 0 ? 1 : 0);
       setPageCount(pageNumber);
     };

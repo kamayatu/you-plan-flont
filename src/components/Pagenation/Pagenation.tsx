@@ -1,6 +1,5 @@
-import { postType } from "@/types";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 
 interface Props {
   pageCount: number;
@@ -12,16 +11,6 @@ const Pagenation = (props: Props) => {
     pages.push(i);
   }
   return (
-    // <div>
-    //   <div className="min-h-screen py-8">
-    //     <main className="lg:grid grid-cols-2 mx-4">
-    //       {currentPosts.map((post: any) => (
-    //         <PagenationPosts key={post.id} post={post} />
-    //       ))}
-    //     </main>
-    //   </div>
-    // </div>
-
     <section className="mb-8 lg:w-1/2 mx-auto rounded-md p-5">
       <ul className="flex items-center justify-center gap-4">
         {pages.map((page) => (

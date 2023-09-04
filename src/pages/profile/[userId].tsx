@@ -5,7 +5,7 @@ import { goodType, postType, profileType } from "@/types";
 import Avatar from "boring-avatars";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 export const getServerSideProps: GetServerSideProps = async (context: any) => {
   try {
@@ -43,23 +43,7 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
   const [editBio, setEditBio] = useState<string>(profile?.bio);
   const [baseBio, setBaseBio] = useState<string>(profile?.bio);
   const [isLikePosts, setIsLikePosts] = useState(false);
-  // const [isTrueUser, setIsTrueUser] = useState<boolean>(false);
-  // const [urlUserId, setUrlUserId] = useState<number>();
-
   const { user } = useAuth();
-
-  //ログインユーザーがプロフィールユーザーか確認
-  // useEffect(() => {
-  //   if (profile) {
-  //     setUrlUserId(profile.userId);
-  //   }
-
-  //   if (!user) {
-  //     return;
-  //   } else if (user?.id === urlUserId) {
-  //     setIsTrueUser(true);
-  //   }
-  // });
 
   //プロフィール編集ボタン
   const onClickEdit = () => {
@@ -86,7 +70,6 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
 
   const onClickLikeList = () => {
     setIsLikePosts(!isLikePosts);
-    console.log(isLikePosts);
   };
 
   return (
@@ -131,14 +114,14 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
             <div key={good.id} className="bg-white shadow-md rounded p-4 my-4">
               <div className="flex items-center">
                 <div className="p-2">
-                  <Avatar size={40} name={good.user.email} variant="beam" colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]} />
-                  <p>{good.user.username}</p>
+                  <Avatar size={40} name={good.post.author.email} variant="beam" colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]} />
+                  <p>{good.post.author.username}</p>
                   <p>{new Date(good.post.createdAt).toLocaleString()}</p>
                 </div>
-                <div className="mx-auto text-center ">
+                <div className="mx-auto text-center">
                   <Link href={`/posts/${good.post.id}`}>
                     <p className="text-2xl">{good.post.title}</p>
-                    <p className="text-sm">{good.post.content}</p>
+                    <p className="text-sm py-2 lg:mx-28">{good.post.content}</p>
                   </Link>
                 </div>
               </div>
@@ -147,6 +130,7 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
         </div>
       ) : (
         <div>
+          {/* 特定ユーザーの投稿 */}
           {posts.map((post: postType) => (
             <div key={post.id} className="bg-white shadow-md rounded p-4 my-4">
               <div className="flex items-center">
@@ -155,10 +139,10 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
                   <p>{post.author.username}</p>
                   <p>{new Date(post.createdAt).toLocaleString()}</p>
                 </div>
-                <div className="mx-auto text-center ">
+                <div className="mx-auto text-center">
                   <Link href={`/posts/${post.id}`}>
                     <p className="text-2xl">{post.title}</p>
-                    <p className="text-sm">{post.content}</p>
+                    <p className="text-sm py-2 lg:mx-28">{post.content}</p>
                   </Link>
                 </div>
               </div>

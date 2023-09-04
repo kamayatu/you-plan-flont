@@ -1,7 +1,7 @@
 import apiClient from "@/lib/apiClient";
 import { postType } from "@/types";
-import { Router, useRouter } from "next/router";
-import React, { ReactNode, useState } from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
 interface Props {
   post: postType;

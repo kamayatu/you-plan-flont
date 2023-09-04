@@ -22,7 +22,7 @@ const Post = (props: Props) => {
         <div className="mx-auto text-center ">
           <Link href={`/posts/${post.id}`}>
             <p className="text-2xl">{post.title}</p>
-            <p className="text-sm">{post.content}</p>
+            <p className="text-sm py-2 lg:mx-28">{post.content}</p>
           </Link>
         </div>
       </div>

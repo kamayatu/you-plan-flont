@@ -11,15 +11,12 @@ interface Props {
 
 const GoodButton = (props: Props) => {
   const { count, good, post } = props;
-  //postは投稿のやつ、countはgoodのlength、setIsGoodedの初期値
   const [likeCount, setLikeCount] = useState(count);
   const [isGooded, setIsGooded] = useState(false);
-  const [goods, setGoods] = useState(good);
-  //good配列を全部渡すかtrue,falseを渡すか
   const { user } = useAuth();
 
   useEffect(() => {
-    const foundGood = goods.find((e) => e.userId === user?.id && e.postId === post.id);
+    const foundGood = good.find((e) => e.userId === user?.id && e.postId === post.id);
     if (foundGood) {
       setIsGooded(true);
     }

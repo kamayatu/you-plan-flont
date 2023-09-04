@@ -1,5 +1,4 @@
 import apiClient from "@/lib/apiClient";
-import axios from "axios";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 

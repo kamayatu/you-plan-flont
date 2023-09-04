@@ -24,13 +24,12 @@ const Comment = (props: Props) => {
     <div className="flex mt-9">
       <div className="p-3 w-1/5 sm:w-1/4 lg:text-center ">
         <div className="inline-block">
-          <Link href={`/`}>
+          <Link href={`/profile/${comment.userId}`}>
             <Avatar size={40} name={comment.user.email} variant="beam" colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]} />
           </Link>
         </div>
         <p className="text-sm">{comment.user.username}</p>
-        {/* <p>{new Date(post.createdAt).toLocaleString()}</p> */}
-        <p className="text-sm">2022-22-22</p>
+        <p className="text-sm">{new Date(comment.createdAt).toLocaleString()}</p>
       </div>
       <div className="bg-gray-100 w-full p-4 rounded-lg">
         <p>{comment.comment}</p>
