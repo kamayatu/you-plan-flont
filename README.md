@@ -42,6 +42,16 @@ pass: ninja
 | Next.js        | Node.js      | supabase     |
 | TailWindCSS    | express      | PostgreSQL   |
 
+## バージョン
+
+- React:18.2.0
+- Typescript:5.1.6
+- TailWindCss: 3.3.3
+
+- Node.js: 18.14.2
+- Express: 4.18.2
+- Prisma: 5.1.1
+
 ```bash
 npm run dev
 # or
