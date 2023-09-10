@@ -11,8 +11,12 @@ const Signup = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await createAccount(username, email, password);
-    router.push("/login");
+    try {
+      await createAccount(username, email, password);
+      router.push("/login");
+    } catch (err) {
+      alert("このメールアドレスはすでに登録されています。");
+    }
   };
   return (
     <div className="flex justify-center items-center h-screen bg-blue-100">
