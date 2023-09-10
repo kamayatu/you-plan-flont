@@ -1,7 +1,7 @@
 import { useAuth } from "@/context/Auth";
-import apiClient from "@/lib/apiClient";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { loginApi } from "./api/functions/auth";
 
 const login = () => {
   const [email, setEmail] = useState<string>("");
@@ -14,11 +14,8 @@ const login = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await apiClient.post("/api/auth/login", {
-        email,
-        password,
-      });
-      const token = response.data.token;
+      const response = await loginApi(email, password);
+      const token = response.token;
       login(token);
       router.push("/");
     } catch (err) {

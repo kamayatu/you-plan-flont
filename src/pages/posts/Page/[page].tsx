@@ -1,20 +1,23 @@
 import Head from "next/head";
-import apiClient from "@/lib/apiClient";
 import PagenationPosts from "@/components/Pagenation/PagenationPosts";
 import { NUMBER_OF_POSTS_PER_PAGE } from "@/constants/constants";
 import { useEffect, useState } from "react";
 import Pagenation from "@/components/Pagenation/Pagenation";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { ParsedUrlQuery } from "querystring";
+import { postType } from "@/types";
+import { allPosts } from "@/pages/api/functions/post";
 
 //pagenationページ
-export const getServerSideProps = async (context: any) => {
+export const getServerSideProps = async (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
   try {
-    const res = await apiClient.get("/posts");
-    const posts = res.data;
-    const currentPageNumber = context.params.page;
+    const posts = await allPosts();
+    const pageQueryParam = Array.isArray(context.query.page) ? context.query.page[0] : context.query.page || "";
+    const currentPageNumber = parseInt(pageQueryParam);
     const startIndex = (currentPageNumber - 1) * NUMBER_OF_POSTS_PER_PAGE;
     const endIndex = startIndex + NUMBER_OF_POSTS_PER_PAGE;
     const slicedPosts = posts.slice(startIndex, endIndex);
-    if (parseInt(currentPageNumber) > Math.floor(posts.length / NUMBER_OF_POSTS_PER_PAGE) + (posts.length % NUMBER_OF_POSTS_PER_PAGE > 0 ? 1 : 0)) {
+    if (currentPageNumber > Math.floor(posts.length / NUMBER_OF_POSTS_PER_PAGE) + (posts.length % NUMBER_OF_POSTS_PER_PAGE > 0 ? 1 : 0)) {
       return { notFound: true };
     }
 
@@ -29,7 +32,12 @@ export const getServerSideProps = async (context: any) => {
   }
 };
 
-const BlogPageList = ({ allPosts, posts }: any) => {
+interface Props {
+  allPosts: postType[];
+  posts: postType[];
+}
+
+const BlogPageList = ({ allPosts, posts }: Props) => {
   const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
@@ -51,7 +59,7 @@ const BlogPageList = ({ allPosts, posts }: any) => {
       <div>
         <div className="min-h-screen py-8">
           <main className="lg:grid grid-cols-2 mx-4">
-            {posts.map((post: any) => (
+            {posts.map((post: postType) => (
               <PagenationPosts key={post.id} post={post} />
             ))}
           </main>

@@ -1,11 +1,15 @@
 import { useAuth } from "@/context/Auth";
-import apiClient from "@/lib/apiClient";
 import { commentType, goodType, postType } from "@/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Comment from "@/components/Comment";
 import Profile from "@/components/Profile";
+import { GetServerSidePropsContext, PreviewData } from "next";
+import { ParsedUrlQuery } from "querystring";
+import { createComment, getComments } from "../api/functions/comment";
+import { getGoods, updateGood } from "../api/functions/good";
+import { SelectPost, deletePost } from "../api/functions/post";
 
 interface Props {
   post: postType;
@@ -13,22 +17,24 @@ interface Props {
   comment: commentType[];
 }
 //投稿詳細ページ
-export const getServerSideProps = async (context: any) => {
-  const { postId } = context.params;
+export const getServerSideProps = async (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
+  const pageQueryParam = Array.isArray(context.query.postId) ? context.query.postId[0] : context.query.postId || "";
+  const postId = parseInt(pageQueryParam);
+
   try {
-    const postData = await apiClient.get(`/posts/${postId}`);
-    const goodData = await apiClient.get(`/good/${postId}`);
-    const commentData = await apiClient.get(`/comment/${postId}`);
-    if (!postData.data) {
+    const postData = await SelectPost(postId);
+    const goodData = await getGoods(postId);
+    const commentData = await getComments(postId);
+    if (!postData) {
       return {
         notFound: true,
       };
     }
     return {
       props: {
-        post: postData.data,
-        good: goodData.data,
-        comment: commentData.data,
+        post: postData,
+        good: goodData,
+        comment: commentData,
       },
     };
   } catch (err) {
@@ -67,7 +73,7 @@ const PostPage = ({ post, good, comment }: Props) => {
   const onClickDelete = async () => {
     try {
       if (confirm("本当に削除しますか？")) {
-        await apiClient.delete(`/posts/edit/${post.id}`);
+        await deletePost(post.id);
         alert("削除しました。");
         router.push(`/profile/${post.authorId}`);
       }
@@ -80,11 +86,10 @@ const PostPage = ({ post, good, comment }: Props) => {
   const onClickComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const newComment = await apiClient.post(`/comment/${post.id}`, {
-        comment: commentText,
-      });
+      const newComment = await createComment(post.id, commentText);
+
       setCommentText("");
-      setCurrentComent((prevPosts) => [newComment.data, ...prevPosts]);
+      setCurrentComent((prevPosts) => [newComment, ...prevPosts]);
     } catch (err) {
       alert("ログインしてください。");
       console.log(err);
@@ -94,7 +99,7 @@ const PostPage = ({ post, good, comment }: Props) => {
   //good追加API
   const onClickGood = async () => {
     try {
-      await apiClient.put(`/good/${post.id}`);
+      await updateGood(post.id);
       setCount(isGooded ? count - 1 : count + 1);
       setIsGooded(!isGooded);
     } catch (err) {
@@ -115,7 +120,7 @@ const PostPage = ({ post, good, comment }: Props) => {
             <h3 className="font-bold text-3xl p-4 bg-blue-500 rounded-md">EVENING PLANNER</h3>
             <h4 className="text-3xl p-4 rounded-sm font-bold">{post.title}</h4>
             <ul className=" m-0">
-              {exactTimeArray.map((time: any, index) => (
+              {exactTimeArray.map((time: string, index) => (
                 <li key={index}>
                   <div className="flex border-gray-200 border-t-2">
                     <p className="py-4 px-6 text-xl font-bold w-24 border-amber-950 border-r-2 lg:w-32 text-center">{everyTime[index]}</p>

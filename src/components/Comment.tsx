@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/Auth";
-import apiClient from "@/lib/apiClient";
+import { deleteComment } from "@/pages/api/functions/comment";
 import { commentType } from "@/types";
 import Avatar from "boring-avatars";
 import Link from "next/link";
@@ -17,7 +17,7 @@ const Comment = (props: Props) => {
 
   const onClickDeleteComment = () => {
     const commentId = comment.id;
-    apiClient.delete(`/comment/${comment.id}`);
+    deleteComment(commentId);
     setCurrentComent(currentComment.filter((element: commentType) => !(commentId === element.id)));
   };
   return (

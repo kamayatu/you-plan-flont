@@ -1,5 +1,5 @@
-import apiClient from "@/lib/apiClient";
 import React, { useState } from "react";
+import { createPost } from "./api/functions/post";
 
 const post = () => {
   const [completeState, setCompleteState] = useState(true);
@@ -18,18 +18,7 @@ const post = () => {
     e.preventDefault();
 
     try {
-      await apiClient.post("/posts", {
-        title,
-        five,
-        six,
-        seven,
-        eight,
-        nine,
-        ten,
-        eleven,
-        twelve,
-        content,
-      });
+      await createPost(title, five, six, seven, eight, nine, ten, eleven, twelve, content);
       alert("新規プランを追加しました。");
     } catch (err) {
       alert("ログインしてください");

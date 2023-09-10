@@ -1,19 +1,22 @@
-import apiClient from "@/lib/apiClient";
+import { SelectPost, editPost } from "@/pages/api/functions/post";
 import { postType } from "@/types";
+import { GetServerSidePropsContext, PreviewData } from "next";
 import { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
 import React, { useState } from "react";
 
 interface Props {
   post: postType;
 }
 
-export const getServerSideProps = async (context: any) => {
-  const { editId } = context.params;
+export const getServerSideProps = async (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
+  const editIdQueryParam = Array.isArray(context.query.editId) ? context.query.editId[0] : context.query.editId || "";
+  const editId = parseInt(editIdQueryParam);
   try {
-    const serverRenderedData = await apiClient.get(`/posts/${editId}`);
+    const targetPost = await SelectPost(editId);
     return {
       props: {
-        post: serverRenderedData.data,
+        post: targetPost,
       },
     };
   } catch (err) {
@@ -39,18 +42,7 @@ const editId = ({ post }: Props) => {
     e.preventDefault();
 
     try {
-      await apiClient.put(`/posts/edit/${post.id}`, {
-        title,
-        five,
-        six,
-        seven,
-        eight,
-        nine,
-        ten,
-        eleven,
-        twelve,
-        content,
-      });
+      await editPost(post.id, title, five, six, seven, eight, nine, ten, eleven, twelve, content);
       alert("変更しました。");
       router.push(`/profile/${post.authorId}`);
     } catch (err) {

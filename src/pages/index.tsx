@@ -1,12 +1,12 @@
 import Head from "next/head";
 import Post from "@/components/Post";
-import apiClient from "@/lib/apiClient";
 import Link from "next/link";
+import { postType } from "@/types";
+import { fivePosts } from "./api/functions/post";
 
 export const getServerSideProps = async () => {
   try {
-    const res = await apiClient.get("/posts/five/5");
-    const posts = res.data;
+    const posts = await fivePosts();
     return {
       props: {
         posts,
@@ -17,7 +17,11 @@ export const getServerSideProps = async () => {
   }
 };
 
-export default function Home({ posts }: any) {
+interface Props {
+  posts: postType[];
+}
+
+export default function Home({ posts }: Props) {
   return (
     <>
       <Head>
@@ -28,7 +32,7 @@ export default function Home({ posts }: any) {
       </Head>
       <div className="min-h-screen py-8">
         <main className=" container mx-auto py-4">
-          {posts.map((post: any) => (
+          {posts.map((post: postType) => (
             <Post key={post.id} post={post} />
           ))}
           <Link href="/posts/Page/1" className=" mb-6 rounded-md px-5 block text-right ">

@@ -1,29 +1,33 @@
 import Profile from "@/components/Profile";
 import { useAuth } from "@/context/Auth";
-import apiClient from "@/lib/apiClient";
 import { goodType, postType, profileType } from "@/types";
 import Avatar from "boring-avatars";
-import { GetServerSideProps } from "next";
+import { GetServerSideProps, GetServerSidePropsContext, PreviewData } from "next";
 import Link from "next/link";
+import { ParsedUrlQuery } from "querystring";
 import React, { useState } from "react";
+import { userPosts } from "../api/functions/post";
+import { SelectProfile, updateBio } from "../api/functions/user";
+import { getGoodPosts } from "../api/functions/good";
 
-export const getServerSideProps: GetServerSideProps = async (context: any) => {
+export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
+  const userIdQueryParam = Array.isArray(context.query.userId) ? context.query.userId[0] : context.query.userId || "";
+  const userId = parseInt(userIdQueryParam);
   try {
     //プロフィールページ
-    const { userId } = context.params;
-    const userAllPosts = await apiClient.get(`posts/user/${userId}`);
-    const userProfile = await apiClient.get(`users/profile/${userId}`);
-    const goodedPosts = await apiClient.get(`good/user/${userId}`);
-    if (!userProfile.data) {
+    const userAllPosts = await userPosts(userId);
+    const userProfile = await SelectProfile(userId);
+    const goodedPosts = await getGoodPosts(userId);
+    if (!userProfile) {
       return {
         notFound: true,
       };
     }
     return {
       props: {
-        posts: userAllPosts.data,
-        profile: userProfile.data,
-        goods: goodedPosts.data,
+        posts: userAllPosts,
+        profile: userProfile,
+        goods: goodedPosts,
       },
     };
   } catch (err) {
@@ -58,12 +62,11 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
   //プロフィール編集
   const changeBio = async () => {
     try {
-      await apiClient.put(`/users/profile/${profile.userId}`, {
-        bio: editBio,
-      });
+      await updateBio(profile.userId, editBio);
       setBaseBio(editBio);
       cancelEdit();
     } catch (err) {
+      console.log(err);
       alert("権限がありません");
     }
   };

@@ -1,4 +1,5 @@
 import apiClient from "@/lib/apiClient";
+import { findUser } from "@/pages/api/functions/user";
 import React, { useContext, createContext, ReactNode, useEffect, useState } from "react";
 
 interface Props {
@@ -25,14 +26,15 @@ export function AuthProvider({ children }: Props) {
     if (token) {
       apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
 
-      apiClient
-        .get("/users/find")
-        .then((res) => {
-          setUser(res.data.user);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+      try {
+        const getLoginUser = async () => {
+          const foundUser = await findUser();
+          setUser(foundUser.user);
+        };
+        getLoginUser();
+      } catch (err) {
+        console.log(err);
+      }
     }
   }, []);
 
@@ -40,9 +42,11 @@ export function AuthProvider({ children }: Props) {
     localStorage.setItem("auth_token", token);
     apiClient.defaults.headers["Authorization"] = `Bearer ${token}`;
     try {
-      apiClient.get("/users/find").then((res) => {
-        setUser(res.data.user);
-      });
+      const getLoginUser = async () => {
+        const foundUser = await findUser();
+        setUser(foundUser.user);
+      };
+      getLoginUser();
     } catch (err) {
       console.log(err);
     }
