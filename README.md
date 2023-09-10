@@ -1,4 +1,6 @@
 ## ユウプラ（夕方プランナー）
+<img width="700" alt="スクリーンショット 2023-09-05 8 29 34" src="https://github.com/kamayatu/you-plan-flont/assets/80947138/1681a1d7-2c2f-43fe-aa29-82fbcf3aaee4">
+
 
 [ポートフォリオリンク先](rinkusaki)
 
@@ -25,6 +27,8 @@ pass: ninja
 そんな悩みをすでに習慣化してる人の真似をするところから始めてみませんか？<br>
 理想の自己実現の一歩をユウプラは応援します。
 
+<img width="700" alt="スクリーンショット 2023-09-05 8 29 43" src="https://github.com/kamayatu/you-plan-flont/assets/80947138/227b839f-95a6-496f-a335-b4ee96383b1b">
+
 ## メイン機能
 
 - ユーザー登録、ログイン機能
@@ -34,6 +38,9 @@ pass: ninja
 - いいね機能
   - いいねした投稿表示
 - ページネーション機能
+
+
+<img width="700" alt="スクリーンショット 2023-09-05 8 30 30" src="https://github.com/kamayatu/you-plan-flont/assets/80947138/57afb30f-0195-4328-afe0-0680c560efb8">
 
 ## 使用技術
 
@@ -52,37 +59,7 @@ pass: ninja
 - Express: 4.18.2
 - Prisma: 5.1.1
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-# you-plan-flont
