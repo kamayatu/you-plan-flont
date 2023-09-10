@@ -9,7 +9,7 @@ import { GetServerSidePropsContext, PreviewData } from "next";
 import { ParsedUrlQuery } from "querystring";
 import { createComment, getComments } from "../api/functions/comment";
 import { getGoods, updateGood } from "../api/functions/good";
-import { SelectPost, deletePost } from "../api/functions/post";
+import { selectPost, deletePost } from "../api/functions/post";
 
 interface Props {
   post: postType;
@@ -22,7 +22,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext<Pars
   const postId = parseInt(pageQueryParam);
 
   try {
-    const postData = await SelectPost(postId);
+    const postData = await selectPost(postId);
     const goodData = await getGoods(postId);
     const commentData = await getComments(postId);
     if (!postData) {
@@ -67,6 +67,7 @@ const PostPage = ({ post, good, comment }: Props) => {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   //投稿削除api

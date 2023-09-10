@@ -1,4 +1,4 @@
-import { SelectPost, editPost } from "@/pages/api/functions/post";
+import { selectPost, editPost } from "@/pages/api/functions/post";
 import { postType } from "@/types";
 import { GetServerSidePropsContext, PreviewData } from "next";
 import { useRouter } from "next/router";
@@ -13,7 +13,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext<Pars
   const editIdQueryParam = Array.isArray(context.query.editId) ? context.query.editId[0] : context.query.editId || "";
   const editId = parseInt(editIdQueryParam);
   try {
-    const targetPost = await SelectPost(editId);
+    const targetPost = await selectPost(editId);
     return {
       props: {
         post: targetPost,
@@ -24,7 +24,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext<Pars
   }
 };
 
-const editId = ({ post }: Props) => {
+const EditPost = ({ post }: Props) => {
   const [title, setTitle] = useState<string>(post.title);
   const [five, setFive] = useState<string>(post.five);
   const [six, setSix] = useState<string>(post.six);
@@ -107,4 +107,4 @@ const editId = ({ post }: Props) => {
   );
 };
 
-export default editId;
+export default EditPost;

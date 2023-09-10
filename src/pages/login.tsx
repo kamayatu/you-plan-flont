@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { loginApi } from "./api/functions/auth";
 
-const login = () => {
+const Login = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -49,4 +49,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

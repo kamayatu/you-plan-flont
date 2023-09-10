@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { createAccount } from "./api/functions/auth";
 
-const signup = () => {
+const Signup = () => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -45,4 +45,4 @@ const signup = () => {
   );
 };
 
-export default signup;
+export default Signup;

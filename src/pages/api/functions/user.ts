@@ -1,6 +1,6 @@
 import apiClient from "@/lib/apiClient";
 //プロフィール取得
-export const SelectProfile = async (id: number) => {
+export const selectProfile = async (id: number) => {
   const result = await apiClient.get(`users/profile/${id}`);
   return result.data;
 };

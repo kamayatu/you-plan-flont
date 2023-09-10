@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createPost } from "./api/functions/post";
 
-const post = () => {
+const Post = () => {
   const [completeState, setCompleteState] = useState(true);
   const [title, setTitle] = useState<string>("");
   const [five, setFive] = useState<string>("");
@@ -92,4 +92,4 @@ const post = () => {
   );
 };
 
-export default post;
+export default Post;

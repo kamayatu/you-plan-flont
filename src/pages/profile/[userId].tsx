@@ -7,7 +7,7 @@ import Link from "next/link";
 import { ParsedUrlQuery } from "querystring";
 import React, { useState } from "react";
 import { userPosts } from "../api/functions/post";
-import { SelectProfile, updateBio } from "../api/functions/user";
+import { selectProfile, updateBio } from "../api/functions/user";
 import { getGoodPosts } from "../api/functions/good";
 
 export const getServerSideProps: GetServerSideProps = async (context: GetServerSidePropsContext<ParsedUrlQuery, PreviewData>) => {
@@ -16,7 +16,7 @@ export const getServerSideProps: GetServerSideProps = async (context: GetServerS
   try {
     //プロフィールページ
     const userAllPosts = await userPosts(userId);
-    const userProfile = await SelectProfile(userId);
+    const userProfile = await selectProfile(userId);
     const goodedPosts = await getGoodPosts(userId);
     if (!userProfile) {
       return {

@@ -10,7 +10,7 @@ export const allPosts = async () => {
   return result.data;
 };
 //１つの投稿取得
-export const SelectPost = async (id: number) => {
+export const selectPost = async (id: number) => {
   const result = await apiClient.get(`/posts/${id}`);
   return result.data;
 };
