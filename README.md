@@ -2,7 +2,7 @@
 <img width="700" alt="スクリーンショット 2023-09-05 8 29 34" src="https://github.com/kamayatu/you-plan-flont/assets/80947138/1681a1d7-2c2f-43fe-aa29-82fbcf3aaee4">
 
 
-[ポートフォリオリンク先](rinkusaki)
+[ポートフォリオリンク先](https://you-plan-flont-m6661if6i-kamayatu.vercel.app/)
 
 ## ゲストユーザー
 
