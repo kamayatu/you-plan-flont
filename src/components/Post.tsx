@@ -10,7 +10,7 @@ type Props = {
 const Post = (props: Props) => {
   const { post } = props;
   return (
-    <div className="bg-white shadow-md rounded p-4 mb-4">
+    <div className="bg-white shadow-md rounded p-4 mb-4 mx-3">
       <div className="flex items-center">
         <div className="p-2">
           <Link href={`/profile/${post.authorId}`}>

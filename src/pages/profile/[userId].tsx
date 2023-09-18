@@ -92,7 +92,7 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
           </button>
         </div>
       )}
-      <div className="bg-white p-4 mt-10 shadow-md rounded-sm">
+      <div className="bg-white p-4 mt-10 shadow-md rounded-sm mx-3">
         <div className="flex justify-between">
           <Profile profile={profile} bio={baseBio} isProfile={true} />
           {!(user && user.id === profile.userId) ? (
@@ -114,7 +114,7 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
         <div>
           {/* likeのやつ */}
           {goods.map((good: goodType) => (
-            <div key={good.id} className="bg-white shadow-md rounded p-4 my-4">
+            <div key={good.id} className="bg-white shadow-md rounded p-4 my-4 mx-3">
               <div className="flex items-center">
                 <div className="p-2">
                   <Avatar size={40} name={good.post.author.email} variant="beam" colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]} />
@@ -135,7 +135,7 @@ const UserProfile = ({ posts, profile, goods }: Props) => {
         <div>
           {/* 特定ユーザーの投稿 */}
           {posts.map((post: postType) => (
-            <div key={post.id} className="bg-white shadow-md rounded p-4 my-4">
+            <div key={post.id} className="bg-white shadow-md rounded p-4 my-4 mx-3">
               <div className="flex items-center">
                 <div className="p-2">
                   <Avatar size={40} name={post.author.email} variant="beam" colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]} />
